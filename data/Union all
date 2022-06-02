@@ -1,0 +1,15 @@
+
+
+SELECT 'google' as store,
+name, rating, price::text, review_count, primary_genre
+FROM app_store_apps
+
+UNION ALL 
+
+SELECT 'apple' as store, name, rating, price, review_count::text, genres
+FROM play_store_apps
+WHERE rating IS NOT null
+ORDER by name
+
+
+This doesn't work for wanting to focus on apps in both stores

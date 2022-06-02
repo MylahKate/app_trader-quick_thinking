@@ -1,0 +1,36 @@
+
+
+SELECT DISTINCT app.name
+--      ,size_bytes
+--      ,currency
+--      ,price
+--      ,review_count
+       
+--      ,app.rating                         AS app_rating
+--  	,play.rating                        AS play_rating
+	  ,(app.rating + play.rating)/2       AS avg_rating  
+--      ,app.price                          AS app_price
+--      ,play.price                         AS play_price
+	  
+	  ,(app.price::money
+      + TRIM(REPLACE(play.price,'$',''))::money)/2 AS avg_price
+	 
+--      ,avg_price::text * play_install_count AS profit
+	 
+--	   ,(avg_price::money
+--     + TRIM(REPLACE(play_install,'+',''))::numeric) * play_install_count AS profit
+	 
+--	  ,play.install_count				  AS play_install_count
+	  ,app.primary_genre			      AS app_genre
+--	  ,play.category				      AS play_category
+	  ,play.genres						  AS play_genre
+	  ,play.content_rating		          AS play_content_rating
+	  ,app.content_rating				  AS app_content_rating
+	FROM app_store_apps AS app
+	INNER JOIN play_store_apps AS play ON app.name = play.name
+GROUP BY app.name, app.rating, play.rating, app.price, play.price, avg_price, app.primary_genre, play.category, play.genres, play.install_count ,play.content_rating, app.content_rating
+
+
+SELECT name, price, genres, (((rating/0.5)*12)+12) AS lifespan_months
+
+

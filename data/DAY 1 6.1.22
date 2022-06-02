@@ -1,0 +1,103 @@
+select *
+from app_store_apps
+
+select *
+from play_store_apps
+
+SELECT *
+FROM app_store_apps
+INNER join play_store_apps
+USING (name);
+
+SELECT  name, 
+FROM app_store_apps 
+FULL JOIN play_store_apps 
+USING (name)
+
+
+
+
+-- SELECT google.name           AS google_app_name
+--       ,apple.name            AS rating
+-- 	  ,google.*
+-- 	  ,apple.*
+-- FROM app_store_apps          AS apple 
+--   INNER JOIN play_store_apps AS google ON google.name <> apple.name:
+  
+  
+  
+  
+SELECT app_store_app.name             AS name
+      ,AVG(rating)      AS avg_rating
+      ,price::text      AS price
+	  ,null 			AS install_count
+FROM   app_store_apps 
+
+UNION ALL
+
+SELECT play_store_app.name             AS name
+      ,AVG(rating)      AS avg_rating
+      ,price::text      AS price
+	  ,install_count	AS install_count
+FROM play_store_apps
+GROUP by app_store_app.name, avg_rating
+ORDER by name
+
+
+
+
+
+SELECT name, rating, price::text
+FROM app_store_apps
+UNION ALL
+SELECT name, rating, price
+FROM play_store_apps
+ORDER by price
+
+SELECT name                  AS name
+      ,primary_genre         AS primary_genre
+      ,rating
+      ,review_count
+      ,price
+      ,currency
+      ,content_rating
+      ,size_bytes
+FROM public.app_store_apps
+	
+SELECT name
+      ,category             AS primary_genre
+      ,genres
+      ,rating
+      ,review_count
+      ,price
+      ,install_count
+      ,content_rating
+      ,size
+      ,type
+FROM public.play_store_apps
+
+
+
+
+SELECT name                  AS name
+      ,primary_genre         AS primary_genre
+      ,rating
+      ,review_count
+      ,price
+      ,currency
+      ,content_rating
+      ,size_bytes
+FROM public.app_store_apps
+	
+SELECT name
+      ,category             AS primary_genre
+      ,genres
+      ,rating
+      ,review_count
+      ,price
+      ,install_count
+      ,content_rating
+      ,size
+      ,type
+FROM public.play_store_apps
+
