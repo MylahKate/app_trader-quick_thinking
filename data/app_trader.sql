@@ -1,0 +1,26 @@
+--App Trader Project
+/*SELECT *
+FROM app_store_apps
+INNER JOIN play_store_apps
+USING (name);/*
+--Combined the data*/
+
+SELECT app.name
+	  ,ROUND((app.rating + play.rating)/2,2)      AS avg_rating
+	 
+	  ,ROUND((((app.rating/0.5)*12)+12),2)         AS lifespan_months
+	
+	  ,ROUND((((app.rating/0.5)*12)+12),2) * 1500           AS revenue
+	 
+	  ,(app.price::money
+      + TRIM(REPLACE(play.price,'$',''))::money)/2 AS avg_price
+	
+	  ,app.primary_genre			      AS app_genre
+	  ,play.genres						  AS play_genre
+	  ,play.content_rating		          AS play_content_rating
+	  ,app.content_rating				  AS app_content_rating
+	 
+FROM app_store_apps AS app
+INNER JOIN play_store_apps AS play ON app.name = play.name
+GROUP BY app.name, app.rating, play.rating, avg_price, app.primary_genre, play.category, play.genres, play.install_count ,play.content_rating, app.content_rating, revenue
+ORDER BY revenue DESC, avg_rating DESC
